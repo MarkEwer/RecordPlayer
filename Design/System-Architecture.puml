@@ -3,34 +3,47 @@
 Title RecordPlayer System Context: Top Level Design
 
 !include Template/C4/C4_Context.puml
-!include Template/tupadr3/font-awesome-5/users.puml
-!include Template/logos/webassembly.puml
-!include Template/tupadr3/dev2/mongodb_wordmark.puml
 !include Template/tupadr3/dev2/redis_wordmark.puml
-!include Template/tupadr3/devicons/database.puml
-!include Template/tupadr3/devicons/msql_server.puml
-!include Template/logos/elasticsearch.puml
-!include Template/logos/websocket.puml
-!include Template/tupadr3/material/domain.puml
-!include Template/tupadr3/font-awesome-5/record_vinyl.puml
 
 LAYOUT_WITH_LEGEND()
 
+!include Template/tupadr3/font-awesome-5/users.puml
 Person(User, User, Primary User, "users")
-System(Client, Client, Blazor WebAssembly, "webassembly")
-System(Web, Web, SignalR Hub, "websocket")
-System(Api, Api, SignalR Hub, "record_vinyl")
-System(Log, Log, Record Store Database, "elasticsearch")
-System(Projection, Projection, Projected View Models, "msql_server")
-System(Models, Models, Persisted Model State, "mongodb_wordmark")
 
+
+System_Boundary(Front_End, "Front End") {
+
+  !include Template/logos/webassembly.puml
+  System(Client, Client, Blazor WebAssembly, "webassembly")
+  
+  !include Template/logos/websocket.puml
+  System(Web, "RecordPlayer Web", SignalR Hub, "websocket")
+
+}
+
+System_Boundary(Back_End, "Back End") {
+
+  !include Template/tupadr3/font-awesome-5/record_vinyl.puml
+  System(Api, "RecordPlayer API", SignalR Hub, "record_vinyl")
+  
+  !include Template/logos/elasticsearch.puml
+  System(Log, Log, Record Store Database, "elasticsearch")
+  
+  !include Template/tupadr3/devicons/msql_server.puml
+  System(Projection, Projection, Projected View Models, "msql_server")
+  
+  !include Template/tupadr3/dev2/mongodb_wordmark.puml
+  System(Models, Models, Persisted Model State, "mongodb_wordmark")
+
+}
 Rel(User, Client, Uses, via Browser)
-Rel(Client, Web, Bi-directional Event Stream, via SignlaR)
-Rel(Web, Log, Save Records, via Something)
-Rel(Log, Api, Read Record Subscriptions, via Something)
+Rel(User, Web, "Navigates To", via Browser)
+Rel_R(Client, Web, Bi-directional Event Stream, via SignlaR)
+Rel_D(Web, Log, Save Records, via Something)
+Rel_D(Log, Api, Read Record Subscriptions, via Something)
 Rel_U(Projection, Web, Query Viewmodels, via Something)
 Rel_U(Api, Projection, Update Projected View Models, via Something)
-Rel_U(Models, Api, Query Model State, via Something)
-Rel(Api, Models, Save Snapshot State of Model Objects, via Something)
+Rel_R(Models, Api, Query Model State, via Something)
+Rel_L(Api, Models, Save Snapshot State of Model Objects, via Something)
 
 @enduml

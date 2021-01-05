@@ -1,0 +1,9 @@
+@startuml RecordPlayer Container Architecture
+
+Title RecordPlayer Contianer Architecture Design
+
+!include Template/C4/C4_Container.puml
+
+Container(Client,Client,"Blazor WebAssembly Application that Runs in the Browser")
+
+@enduml
