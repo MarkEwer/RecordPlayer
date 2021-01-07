@@ -1,9 +1,48 @@
 @startuml RecordPlayer Container Architecture
 
 Title RecordPlayer Contianer Architecture Design
-
 !include Template/C4/C4_Container.puml
 
-Container(Client,Client,"Blazor WebAssembly Application that Runs in the Browser")
+!include Template/tupadr3/font-awesome-5/users.puml
+Person(User, User, Primary User, "users")
+
+System_Boundary(Browser, "RecordPlayer Client") {
+  !include Template/logos/webassembly.puml
+  Container(Client, "RecordPlayer Client", "Blazor WebAssembly Application", "The RecordPlayer Client container holds a WebAssembly single-page-app developed using Blazor. This container presents the primary user interface of the application and manages the entities and view models currently displayed to the user. It communicates to the Web Front End using a bi-directional SignalR channel so change requests are sent to the server in real-time and modifications from any user are broadcast back to the client, also in real-time.", "webassembly")
+}
+
+System_Boundary(Front_End, "RecordPlayer Web Front End") {  
+  !include Template/logos/websocket.puml
+  Container(Web, "RecordPlayer Web", "ASP.Net SignalR Hub", "The RecordPlayer Web container is an ASP.Net web application using SignalR as a communication channel. This means one of its primary responsibilities is to maintain and secure client Record subscriptions. When a new record is projected, this component should determine which of the connected clients should recieve that record and broadcast it to them. Additionally, when a client sends a command Record to RecordPlayer Web it should determine if that client is permitted to perform that action then relay the command to the Log storage so the RecordPlayer API can act on that request.", "websocket")
+}
+
+System_Boundary(Storage, "Storage Systems") {
+  !include Template/logos/elasticsearch.puml
+  Container(Log, Log, Record Store Database, "", "elasticsearch")
+  
+  !include Template/tupadr3/devicons/msql_server.puml
+  Container(Projection, Projection, Projected View Models, "", "msql_server")
+  
+  !include Template/tupadr3/dev2/mongodb_wordmark.puml
+  Container(Models, Models, Persisted Model State, "", "mongodb_wordmark")
+}
+
+System_Boundary(Back_End, "RecordPlayer Server Back End") {
+  !include Template/tupadr3/font-awesome-5/record_vinyl.puml
+  Container(Api, "RecordPlayer API", SignalR Hub, "", "record_vinyl")
+}
+
+Rel(User, Client, Uses, via Browser)
+Rel(User, Web, "Navigates To", via Browser)
+
+Rel_R(Client, Web, Commands, "Sends command Records to the Front End for processing via SignalR WebSocket")
+Rel_L(Web, Client, Events, "Sends event Records to the Client to update the UI via SignalR WebSocket")
+
+Rel_D(Web, Log, Save Records, via Something)
+Rel_D(Log, Api, Read Record Subscriptions, via Something)
+Rel_U(Projection, Web, Query Viewmodels, via Something)
+Rel_U(Api, Projection, Update Projected View Models, via Something)
+Rel_R(Models, Api, Query Model State, via Something)
+Rel_L(Api, Models, Save Snapshot State of Model Objects, via Something)
 
 @enduml

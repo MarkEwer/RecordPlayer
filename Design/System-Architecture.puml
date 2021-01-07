@@ -3,47 +3,21 @@
 Title RecordPlayer System Context: Top Level Design
 
 !include Template/C4/C4_Context.puml
-!include Template/tupadr3/dev2/redis_wordmark.puml
 
 LAYOUT_WITH_LEGEND()
 
 !include Template/tupadr3/font-awesome-5/users.puml
+
 Person(User, User, Primary User, "users")
+System(Client, "RecordPlayer Client", "The RecordPlayer Client is a Single-Page-Application built with WebAssembly and WebSockets that communicates changes to and from the RecordPlayer Front End in near real time using SignalR.") 
+System(Front_End, "RecordPlayer Front End", "The RecordPlayer Front End is a web server that hosts an ASP.Net web site using SignalR for real-time communication between the client and server using a fully bi-directional channel.") 
+System(Back_End, "RecordPlayer Server Back End", "The RecordPlayer Back End is a server that hosts a full CQRS framework including an RecordStore stream database, a DocumentStore for entity snapshots, and a ProjectionStore for projected view-models") 
 
-
-System_Boundary(Front_End, "Front End") {
-
-  !include Template/logos/webassembly.puml
-  System(Client, Client, Blazor WebAssembly, "webassembly")
-  
-  !include Template/logos/websocket.puml
-  System(Web, "RecordPlayer Web", SignalR Hub, "websocket")
-
-}
-
-System_Boundary(Back_End, "Back End") {
-
-  !include Template/tupadr3/font-awesome-5/record_vinyl.puml
-  System(Api, "RecordPlayer API", SignalR Hub, "record_vinyl")
-  
-  !include Template/logos/elasticsearch.puml
-  System(Log, Log, Record Store Database, "elasticsearch")
-  
-  !include Template/tupadr3/devicons/msql_server.puml
-  System(Projection, Projection, Projected View Models, "msql_server")
-  
-  !include Template/tupadr3/dev2/mongodb_wordmark.puml
-  System(Models, Models, Persisted Model State, "mongodb_wordmark")
-
-}
 Rel(User, Client, Uses, via Browser)
-Rel(User, Web, "Navigates To", via Browser)
-Rel_R(Client, Web, Bi-directional Event Stream, via SignlaR)
-Rel_D(Web, Log, Save Records, via Something)
-Rel_D(Log, Api, Read Record Subscriptions, via Something)
-Rel_U(Projection, Web, Query Viewmodels, via Something)
-Rel_U(Api, Projection, Update Projected View Models, via Something)
-Rel_R(Models, Api, Query Model State, via Something)
-Rel_L(Api, Models, Save Snapshot State of Model Objects, via Something)
+Rel(Client, Front_End, Commands, "Push comand Records to the Front End.")
+Rel_U(Front_End, Client, Events, "Push event Records to the Client.")
+
+Rel(Front_End, Back_End, Commands, "Push comand Records to the Back End.")
+Rel_U(Back_End, Front_End, Events, "Push event Records to the Front End.")
 
 @enduml
