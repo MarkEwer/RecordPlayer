@@ -18,18 +18,18 @@ System_Boundary(Front_End, "RecordPlayer Web Front End") {
 
 System_Boundary(Storage, "Storage Systems") {
   !include Template/logos/elasticsearch.puml
-  Container(Log, Log, Record Store Database, "", "elasticsearch")
+  Container(Log, Log, Record Store Database, "The Log database is used to store all the Records sent from the RecordPlayer Web to the RecordPlayer API. This way, the system has a complete history of all system changes, requests, and events. The power is that this approach gives us the ability to 'roll-back' the system to any point in time and show who changed what and when with 100% accuracy.", "elasticsearch")
   
   !include Template/tupadr3/devicons/msql_server.puml
-  Container(Projection, Projection, Projected View Models, "", "msql_server")
+  Container(Projection, Projection, Projected View Models, "The projected view models give our system a way to render user experiences without having to parse the entire record log. These projections are essentially reports generated from the record stream and prepared for easy and fast query access. Pre-rendering the view models is how the system maintains a highly performant user experience.", "msql_server")
   
   !include Template/tupadr3/dev2/mongodb_wordmark.puml
-  Container(Models, Models, Persisted Model State, "", "mongodb_wordmark")
+  Container(Models, Models, Persisted Model State, "The RecordPlayer API uses event-sourced entities as the primary building block for application logic. But, as an entity gets older and has more historical records it can become slower and slower to re-hydrate. To combat this eventual performance degradation the system saves point-in-time snapshots of entity state in the Models database. To re-hydrate an entity, we load the saved state then play back any records that are newer than the saved version.", "mongodb_wordmark")
 }
 
 System_Boundary(Back_End, "RecordPlayer Server Back End") {
   !include Template/tupadr3/font-awesome-5/record_vinyl.puml
-  Container(Api, "RecordPlayer API", SignalR Hub, "", "record_vinyl")
+  Container(Api, "RecordPlayer API", SignalR Hub, "RecordPlayer API is a service that hosts the domain model for our application. The domain model is made of event-sourced Entities. As new Records are added to the Log database, the RecordPlayer API will import them and distribute them to the appropriate Entity or Entities. The Entities will them project reports into the Projections Database for the user experience to view.", "record_vinyl")
 }
 
 Rel(User, Client, Uses, via Browser)
@@ -38,11 +38,13 @@ Rel(User, Web, "Navigates To", via Browser)
 Rel_R(Client, Web, Commands, "Sends command Records to the Front End for processing via SignalR WebSocket")
 Rel_L(Web, Client, Events, "Sends event Records to the Client to update the UI via SignalR WebSocket")
 
-Rel_D(Web, Log, Save Records, via Something)
-Rel_D(Log, Api, Read Record Subscriptions, via Something)
-Rel_U(Projection, Web, Query Viewmodels, via Something)
-Rel_U(Api, Projection, Update Projected View Models, via Something)
-Rel_R(Models, Api, Query Model State, via Something)
-Rel_L(Api, Models, Save Snapshot State of Model Objects, via Something)
+Rel_D(Web, Log, Write Commands, "Sends Command Records for persistence in the Record Log.")
+Rel_U(Log, Web, Read Record Subscriptions, "Notifications of command outcome including sucess/failure messages are pushed from the Log to the RecordPlayer Web.")
+Rel_D(Log, Api, Read Record Subscriptions, "Notifications of command and event Records are pushed from the log to the RecordPlayer API for processing and projection.")
+Rel_U(Api, Log, Write Event Records, "When entities create event Records, they are saved into the Log database so other parts of the system can be notified of those changes.")
+Rel_U(Projection, Web, Query Viewmodels, "Each 'page' of the Client application has a persisted View Model that the client can quickly query because the view is pre-rendered into the Projection database.")
+Rel_U(Api, Projection, Update Projected View Models, "Entities pre-render the expected state for every 'page' in the Client application and save them into the Projection database for rapid query.")
+Rel_R(Models, Api, Query Model State, "When re-hydrating an Entity, the RecordPlayer API can load the last known state of that entity then 'play back' all the event Records since it was last saved.")
+Rel_L(Api, Models, Save Snapshot State of Model Objects, "As a performance improvement, the RecordPlayer API will persist the state of each entity before it is removed from RAM to avoid long delays when it must be re-hydrated.")
 
 @enduml
