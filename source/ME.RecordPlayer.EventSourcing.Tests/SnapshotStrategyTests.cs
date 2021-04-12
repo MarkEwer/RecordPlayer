@@ -10,6 +10,8 @@ namespace ME.RecordPlayer.EventSourcing.Tests
 
     public class Snapshot_Strategy_Scenarios
     {
+        public record IntegerAmountEvent(int Amount);
+
         [Fact]
         public void Given_An_IntervalStrategy_Should_Save_Snapshot_Accordingly()
         {
