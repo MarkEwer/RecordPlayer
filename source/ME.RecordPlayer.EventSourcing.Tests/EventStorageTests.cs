@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ME.RecordPlayer.EventSourcing.Sqlite;
 using ME.RecordPlayer.EventSourcing.Tests.SampleEntity;
 using Microsoft.Data.Sqlite;
@@ -8,79 +9,106 @@ namespace ME.RecordPlayer.EventSourcing.Tests
 {
     public class EventStorageTests
     {
+        internal TestHelper SUT { get; set; }
+
         [Fact]
         public void Given_EventProvider_Should_Replay_Event_Records()
         {
-            Guid documentId = Guid.NewGuid();
-            Guid userId = Guid.NewGuid();
-            Guid clientId = Guid.NewGuid();
-            Guid employeeId = Guid.NewGuid();
-            DateTime now = DateTime.UtcNow;
-            IEventStore eventStore = null;
-            Recorder recorder = null;
-            string actorId = string.Empty;
-            DocumentState state = null;
-
             Scenario
-                .Given(() => eventStore = new SqliteProvider(new SqliteConnectionStringBuilder("Data Source=Sharable;Mode=Memory;Cache=Shared")))
-                  .And(() => actorId = Guid.NewGuid().ToString())
-                  .And(() => state = new DocumentState())
-                  .And(async () => await eventStore.RecordEventAsync(actorId, 1, new Uploaded(documentId, "File.pdf", "Unit Test File", now, now, clientId, userId, now)))
-                  .And(async () => await eventStore.RecordEventAsync(actorId, 2, new EmployeeAssigned(documentId, employeeId, "Mark", "ME", "Ewer", "42", "Number-1", clientId, userId, now)))
-                  .And(async () => await eventStore.RecordEventAsync(actorId, 3, new DisplayNameChanged(documentId, "Unit Test File Renamed", clientId, userId, now)))
+                .Given(async () => await A_New_DocumentState_Entity_Exists())
+                  .And(async () => await Three_Events_Had_Previously_Been_Recorded())
+                  .And(async () => await Our_Entity_Is_Configured_For_EventSourcing())
+                 .When(async () => await We_Restore_The_Entity_From_The_Saved_Previously_Recorded_Events())
 
-                 .When(() => recorder = Recorder.WithEventSourcing(eventStore, actorId, state.ApplyEvent))
-                  .And(async () => await recorder.RecoverStateAsync())
-
-                 .Then(() => Assert.Equal(clientId, state.ClientId))
-                  .And(() => Assert.Equal("Unit Test File Renamed", state.DisplayName))
-                  .And(() => Assert.Equal(documentId, state.DocumentId))
-                  .And(() => Assert.Equal(now, state.Recieved))
-                  .And(() => Assert.Equal(now, state.Uploaded))
-                  .And(() => Assert.Equal("Number-1", state.Owner.AssignmentId))
-                  .And(() => Assert.Equal(clientId, state.Owner.ClientId))
-                  .And(() => Assert.Equal("42", state.Owner.CompanyId))
-                  .And(() => Assert.Equal(employeeId, state.Owner.EmployeeId))
-                  .And(() => Assert.Equal("Mark", state.Owner.GivenName))
-                  .And(() => Assert.Equal("ME", state.Owner.PreferredName))
-                  .And(() => Assert.Equal("Ewer", state.Owner.Surname));
+                 .Then(() => Assert.Equal(SUT.ClientId, SUT.State.ClientId))
+                  .And(() => Assert.Equal("Unit Test File Renamed", SUT.State.DisplayName))
+                  .And(() => Assert.Equal(SUT.DocumentId, SUT.State.DocumentId))
+                  .And(() => Assert.Equal(SUT.Now, SUT.State.Recieved))
+                  .And(() => Assert.Equal(SUT.Now, SUT.State.Uploaded))
+                  .And(() => Assert.Equal("Number-1", SUT.State.Owner.AssignmentId))
+                  .And(() => Assert.Equal(SUT.ClientId, SUT.State.Owner.ClientId))
+                  .And(() => Assert.Equal("42", SUT.State.Owner.CompanyId))
+                  .And(() => Assert.Equal(SUT.EmployeeId, SUT.State.Owner.EmployeeId))
+                  .And(() => Assert.Equal("Mark", SUT.State.Owner.GivenName))
+                  .And(() => Assert.Equal("ME", SUT.State.Owner.PreferredName))
+                  .And(() => Assert.Equal("Ewer", SUT.State.Owner.Surname));
         }
 
         [Fact]
         public void Given_EventProvider_Should_Store_Event_Records()
         {
-            Guid documentId = Guid.NewGuid();
-            Guid userId = Guid.NewGuid();
-            Guid clientId = Guid.NewGuid();
-            Guid employeeId = Guid.NewGuid();
-            DateTime now = DateTime.UtcNow;
-            IEventStore eventStore = null;
-            Recorder recorder = null;
-            string actorId = string.Empty;
-            DocumentState state = null;
-
             Scenario
-                .Given(() => eventStore = new SqliteProvider(new SqliteConnectionStringBuilder("Data Source=Sharable;Mode=Memory;Cache=Shared")))
-                  .And(() => actorId = Guid.NewGuid().ToString())
-                  .And(() => state = new DocumentState())
-                  .And(() => recorder = Recorder.WithEventSourcing(eventStore, actorId, state.ApplyEvent))
+                .Given(async () => await A_New_DocumentState_Entity_Exists())
+                  .And(async () => await Our_Entity_Is_Configured_For_EventSourcing())
+                 .When(async () => await We_Record_Three_Events_Now())
 
-                 .When(async () => await recorder.RecordEventAsync(new Uploaded(documentId, "File.pdf", "Unit Test File", now, now, clientId, userId, now)))
-                  .And(async () => await recorder.RecordEventAsync(new EmployeeAssigned(documentId, employeeId, "Mark", "ME", "Ewer", "42", "Number-1", clientId, userId, now)))
-                  .And(async () => await recorder.RecordEventAsync(new DisplayNameChanged(documentId, "Unit Test File Renamed", clientId, userId, now)))
+                 .Then(() => Assert.Equal(SUT.ClientId, SUT.State.ClientId))
+                  .And(() => Assert.Equal("Unit Test File Renamed", SUT.State.DisplayName))
+                  .And(() => Assert.Equal(SUT.DocumentId, SUT.State.DocumentId))
+                  .And(() => Assert.Equal(SUT.Now, SUT.State.Recieved))
+                  .And(() => Assert.Equal(SUT.Now, SUT.State.Uploaded))
+                  .And(() => Assert.Equal("Number-1", SUT.State.Owner.AssignmentId))
+                  .And(() => Assert.Equal(SUT.ClientId, SUT.State.Owner.ClientId))
+                  .And(() => Assert.Equal("42", SUT.State.Owner.CompanyId))
+                  .And(() => Assert.Equal(SUT.EmployeeId, SUT.State.Owner.EmployeeId))
+                  .And(() => Assert.Equal("Mark", SUT.State.Owner.GivenName))
+                  .And(() => Assert.Equal("ME", SUT.State.Owner.PreferredName))
+                  .And(() => Assert.Equal("Ewer", SUT.State.Owner.Surname));
+        }
 
-                 .Then(() => Assert.Equal(clientId, state.ClientId))
-                  .And(() => Assert.Equal("Unit Test File Renamed", state.DisplayName))
-                  .And(() => Assert.Equal(documentId, state.DocumentId))
-                  .And(() => Assert.Equal(now, state.Recieved))
-                  .And(() => Assert.Equal(now, state.Uploaded))
-                  .And(() => Assert.Equal("Number-1", state.Owner.AssignmentId))
-                  .And(() => Assert.Equal(clientId, state.Owner.ClientId))
-                  .And(() => Assert.Equal("42", state.Owner.CompanyId))
-                  .And(() => Assert.Equal(employeeId, state.Owner.EmployeeId))
-                  .And(() => Assert.Equal("Mark", state.Owner.GivenName))
-                  .And(() => Assert.Equal("ME", state.Owner.PreferredName))
-                  .And(() => Assert.Equal("Ewer", state.Owner.Surname));
+        private async Task A_New_DocumentState_Entity_Exists()
+        {
+            await Task.Run(() =>
+            {
+                SUT = new TestHelper();
+                SUT.ActorId = Guid.NewGuid().ToString();
+                SUT.State = new DocumentState();
+            });
+        }
+
+        private async Task Our_Entity_Is_Configured_For_EventSourcing()
+        {
+            await Task.Run(() =>
+            {
+                SUT.EventStore = new SqliteProvider(new SqliteConnectionStringBuilder("Data Source=Sharable;Mode=Memory;Cache=Shared"));
+                SUT.Recorder = Recorder.WithEventSourcing(SUT.EventStore, SUT.ActorId, SUT.State.ApplyEvent);
+            });
+        }
+
+        private async Task Three_Events_Had_Previously_Been_Recorded()
+        {
+            await SUT.EventStore.RecordEventAsync(SUT.ActorId, 1, SUT.Event1);
+            await SUT.EventStore.RecordEventAsync(SUT.ActorId, 2, SUT.Event2);
+            await SUT.EventStore.RecordEventAsync(SUT.ActorId, 3, SUT.Event3);
+        }
+
+        private async Task We_Record_Three_Events_Now()
+        {
+            await SUT.Recorder.RecordEventAsync(SUT.Event1);
+            await SUT.Recorder.RecordEventAsync(SUT.Event2);
+            await SUT.Recorder.RecordEventAsync(SUT.Event3);
+        }
+
+        private async Task We_Restore_The_Entity_From_The_Saved_Previously_Recorded_Events()
+        {
+            await SUT.Recorder.RecoverStateAsync();
+        }
+
+        internal class TestHelper
+        {
+            internal string ActorId = string.Empty;
+            internal Guid ClientId = Guid.NewGuid();
+            internal Guid DocumentId = Guid.NewGuid();
+            internal Guid EmployeeId = Guid.NewGuid();
+            internal IEventStore EventStore = null;
+            internal DateTime Now = DateTime.UtcNow;
+            internal Recorder Recorder = null;
+            internal DocumentState State = null;
+            internal Guid UserId = Guid.NewGuid();
+            internal Uploaded Event1 => new Uploaded(this.DocumentId, "File.pdf", "Unit Test File", this.Now, this.Now, this.ClientId, this.UserId, this.Now);
+            internal EmployeeAssigned Event2 => new EmployeeAssigned(this.DocumentId, this.EmployeeId, "Mark", "ME", "Ewer", "42", "Number-1", this.ClientId, this.UserId, this.Now);
+            internal DisplayNameChanged Event3 => new DisplayNameChanged(this.DocumentId, "Unit Test File Renamed", this.ClientId, this.UserId, this.Now);
+
         }
     }
 }
