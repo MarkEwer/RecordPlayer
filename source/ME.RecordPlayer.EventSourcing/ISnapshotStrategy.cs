@@ -2,8 +2,8 @@
 
 namespace ME.RecordPlayer.EventSourcing
 {
-    public interface ISnapshotStrategy
-    {
-        bool ShouldTakeSnapshot(RecordedEvent recordedEvent);
-    }
+  public interface ISnapshotStrategy
+  {
+    bool ShouldTakeSnapshot(RecordedEvent recordedEvent);
+  }
 }
