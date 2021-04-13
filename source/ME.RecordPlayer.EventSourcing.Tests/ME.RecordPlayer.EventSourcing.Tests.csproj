@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ME.RecordPlayer.EventSourcing.InMemory\ME.RecordPlayer.EventSourcing.InMemory.csproj" />
+    <ProjectReference Include="..\ME.RecordPlayer.EventSourcing.Sqlite\ME.RecordPlayer.EventSourcing.Sqlite.csproj" />
     <ProjectReference Include="..\ME.RecordPlayer.EventSourcing\ME.RecordPlayer.EventSourcing.csproj" />
   </ItemGroup>
 

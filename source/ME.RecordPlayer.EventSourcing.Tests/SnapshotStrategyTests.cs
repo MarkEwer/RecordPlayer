@@ -32,9 +32,11 @@ namespace ME.RecordPlayer.EventSourcing.Tests
                                            @event => { state *= ((IntegerAmountEvent)@event.Data).Amount; },
                                            snapshot => { state = (int)snapshot.State; },
                                            new IntervalStrategy(1), () => state))
+
                  .When(async () => await intervalSnapshotRecorder.RecordEventAsync(new IntegerAmountEvent(2)))
                   .And(async () => await intervalSnapshotRecorder.RecordEventAsync(new IntegerAmountEvent(2)))
                   .And(async () => await intervalSnapshotRecorder.RecordEventAsync(new IntegerAmountEvent(2)))
+
                  .Then(() => snapshots = provider.GetSnapshots(actorId))
                   .And(() => Assert.Equal(3, snapshots.Count))
                   .And(() => Assert.Equal(2, snapshots[0]))
@@ -50,8 +52,10 @@ namespace ME.RecordPlayer.EventSourcing.Tests
 
             Scenario
                 .Given(() => strategy = new EventTypeStrategy(typeof(int)))
+
                  .When(() => result = strategy.ShouldTakeSnapshot(new RecordedEvent(1, 0)))
                  .Then(() => Assert.True(result))
+
                  .When(() => result = strategy.ShouldTakeSnapshot(new RecordedEvent("not an int", 0)))
                  .Then(() => Assert.False(result));
         }
@@ -64,11 +68,13 @@ namespace ME.RecordPlayer.EventSourcing.Tests
 
             Scenario
                 .Given(() => strategy = new IntervalStrategy(interval))
+
                  .When(() =>
                  {
                      for (var index = 1; index <= expected.Last(); index++)
                          result.Add(index, strategy.ShouldTakeSnapshot(new RecordedEvent(null, index)));
                  })
+
                  .Then(() =>
                  {
                      foreach (var index in result.Keys)
@@ -86,12 +92,16 @@ namespace ME.RecordPlayer.EventSourcing.Tests
                 .Given(() => now = DateTime.Parse("2000-01-01 12:00:00"))
                   .And(() => strategy = new TimeStrategy(TimeSpan.FromSeconds(10), () => now))
                  .Then(() => Assert.False(strategy.ShouldTakeSnapshot(new RecordedEvent(null, 0))))
+
                  .When(() => now = now.AddSeconds(5))
                  .Then(() => Assert.False(strategy.ShouldTakeSnapshot(new RecordedEvent(null, 0))))
+
                  .When(() => now = now.AddSeconds(5))
                  .Then(() => Assert.True(strategy.ShouldTakeSnapshot(new RecordedEvent(null, 0))))
+
                  .When(() => now = now.AddSeconds(5))
                  .Then(() => Assert.False(strategy.ShouldTakeSnapshot(new RecordedEvent(null, 0))))
+
                  .When(() => now = now.AddSeconds(5))
                  .Then(() => Assert.True(strategy.ShouldTakeSnapshot(new RecordedEvent(null, 0))));
         }
