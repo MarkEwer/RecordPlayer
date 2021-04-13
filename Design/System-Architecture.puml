@@ -1,4 +1,4 @@
-@startuml RecordPlayer System Context
+@startuml RecordPlayer-System-Context
 
 Title RecordPlayer System Context: Top Level Design
 
