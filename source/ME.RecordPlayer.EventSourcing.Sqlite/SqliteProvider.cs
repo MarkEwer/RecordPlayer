@@ -26,13 +26,13 @@ namespace ME.RecordPlayer.EventSourcing.Sqlite
       using var initEventsCommand = connection.CreateCommand();
 
       initEventsCommand.CommandText = "CREATE TABLE IF NOT EXISTS Events (Id TEXT, ActorName TEXT, EventIndex REAL, EventData TEXT)";
-      var result = initEventsCommand.ExecuteNonQuery();
+      initEventsCommand.ExecuteNonQuery();
 
       using var initSnapshotsCommand = connection.CreateCommand();
 
       initSnapshotsCommand.CommandText =
           "CREATE TABLE IF NOT EXISTS Snapshots (Id TEXT, ActorName TEXT, SnapshotIndex REAL, SnapshotData TEXT)";
-      result = initSnapshotsCommand.ExecuteNonQuery();
+      initSnapshotsCommand.ExecuteNonQuery();
     }
 
     private string ConnectionString => $"{_connectionStringBuilder}";
