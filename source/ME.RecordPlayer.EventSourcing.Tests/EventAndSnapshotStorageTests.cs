@@ -11,7 +11,7 @@ namespace ME.RecordPlayer.EventSourcing.Tests
 {
   public class EventAndSnapshotStorageTests
   {
-    internal TestHelper SUT { get; set; }
+    internal DocumentEntity SUT { get; set; }
 
     [Fact]
     public async Task Given_Event_And_Snapshot_Should_Replay_Snapshot_Then_Events()
@@ -41,7 +41,7 @@ namespace ME.RecordPlayer.EventSourcing.Tests
     {
       await Task.Run(() =>
       {
-        SUT = new TestHelper();
+        SUT = new DocumentEntity();
         SUT.ActorId = Guid.NewGuid().ToString();
         SUT.State = new DocumentState();
       });

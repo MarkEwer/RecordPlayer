@@ -11,11 +11,11 @@ namespace ME.RecordPlayer.EventSourcing.Tests
 {
   public class RestoringEntitiesFromSavedStateTests
   {
-    internal TestHelper SUT { get; set; }
+    internal DocumentEntity SUT { get; set; }
 
     public RestoringEntitiesFromSavedStateTests()
     {
-      this.SUT = new TestHelper();
+      this.SUT = new DocumentEntity();
       this.SUT.ActorId = Guid.NewGuid().ToString("N");
 
       if (File.Exists($"unit_test_{nameof(RestoringEntitiesFromSavedStateTests)}.db"))
