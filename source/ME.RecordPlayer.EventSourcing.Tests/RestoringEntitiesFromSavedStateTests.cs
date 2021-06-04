@@ -12,6 +12,7 @@ namespace ME.RecordPlayer.EventSourcing.Tests
   public class RestoringEntitiesFromSavedStateTests
   {
     internal DocumentEntity SUT { get; set; }
+    private DocumentState oldState = null;
 
     public RestoringEntitiesFromSavedStateTests()
     {
@@ -38,8 +39,6 @@ namespace ME.RecordPlayer.EventSourcing.Tests
       SUT.State = new DocumentState();
       for (int i = 1; i < 96; i++) await SUT.Recorder.RecordEventAsync(SUT.Rename(i));
     }
-
-    private DocumentState oldState = null;
 
     private async Task When_We_Close_The_Entity()
     {
