@@ -24,7 +24,7 @@ namespace ME.RecordPlayer.EventSourcing.Tests
            .Then(() => Assert.Equal(clientId, state.ClientId))
             .And(() => Assert.Equal("Unit Test File Renamed", state.DisplayName))
             .And(() => Assert.Equal(documentId, state.DocumentId))
-            .And(() => Assert.Equal(now, state.Recieved))
+            .And(() => Assert.Equal(now, state.Received))
             .And(() => Assert.Equal(now, state.Uploaded))
             .And(() => Assert.Equal("Number-1", state.Owner.AssignmentId))
             .And(() => Assert.Equal(clientId, state.Owner.ClientId))

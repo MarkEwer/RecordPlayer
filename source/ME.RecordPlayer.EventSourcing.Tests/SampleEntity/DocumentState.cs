@@ -14,7 +14,7 @@ namespace ME.RecordPlayer.EventSourcing.Tests.SampleEntity
 
     public Employee Owner { get; private set; }
 
-    public DateTime Recieved { get; private set; }
+    public DateTime Received { get; private set; }
 
     public DateTime Uploaded { get; private set; }
 
@@ -43,7 +43,7 @@ namespace ME.RecordPlayer.EventSourcing.Tests.SampleEntity
       Filename = @event.Filename;
       DisplayName = @event.DisplayName;
       Uploaded = @event.UploadedDate;
-      Recieved = @event.ReceivedDate;
+      Received = @event.ReceivedDate;
       ClientId = @event.ClientId;
     }
 

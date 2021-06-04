@@ -64,7 +64,7 @@ namespace ME.RecordPlayer.EventSourcing.Tests
         Assert.Equal(oldState.DisplayName, SUT.State.DisplayName);
         Assert.Equal(oldState.DocumentId, SUT.State.DocumentId);
         Assert.Equal(oldState.Filename, SUT.State.Filename);
-        Assert.Equal(oldState.Recieved, SUT.State.Recieved);
+        Assert.Equal(oldState.Received, SUT.State.Received);
         Assert.Equal(oldState.Uploaded, SUT.State.Uploaded);
       });
     }
