@@ -122,12 +122,15 @@ namespace ME.RecordPlayer.EventSourcing.Tests
           case RecordedEvent recorded:
             State.ApplyEvent(recorded.Data);
             break;
+
           case ReplayEvent replay:
             State.ApplyEvent(replay.Data);
             break;
+
           case RecoverEvent recover:
             State.ApplyEvent(recover.Data);
             break;
+
           default:
             State.ApplyEvent(@event);
             break;

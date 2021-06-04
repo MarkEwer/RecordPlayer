@@ -43,7 +43,7 @@ namespace ME.RecordPlayer.EventSourcing.InMemory
 
     public Task<long> GetEventsAsync(string actorName, long indexStart, long indexEnd, Action<object> callback)
     {
-      var lastIndex = 0l;
+      var lastIndex = 0L;
       if (_events.TryGetValue(actorName, out var events))
       {
         foreach (var e in events.Where(e => e.Key >= indexStart && e.Key <= indexEnd))

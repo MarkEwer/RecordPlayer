@@ -127,27 +127,26 @@ namespace ME.RecordPlayer.EventSourcing.Sqlite
     {
       try
       {
+        var item = new SqliteEvent(actorName, JsonConvert.SerializeObject(@event, AllTypeSettings), index);
 
-      var item = new SqliteEvent(actorName, JsonConvert.SerializeObject(@event, AllTypeSettings), index);
+        using var connection = new SqliteConnection(ConnectionString);
 
-      using var connection = new SqliteConnection(ConnectionString);
+        await connection.OpenAsync();
 
-      await connection.OpenAsync();
+        using var insertCommand = CreateCommand(
+            connection,
+            "INSERT INTO Events (Id, ActorName, EventIndex, EventData) VALUES ($Id, $ActorName, $EventIndex, $EventData)",
+            ("$Id", item.Id),
+            ("$ActorName", item.ActorName),
+            ("$EventIndex", item.Index),
+            ("$EventData", item.Json)
+        );
 
-      using var insertCommand = CreateCommand(
-          connection,
-          "INSERT INTO Events (Id, ActorName, EventIndex, EventData) VALUES ($Id, $ActorName, $EventIndex, $EventData)",
-          ("$Id", item.Id),
-          ("$ActorName", item.ActorName),
-          ("$EventIndex", item.Index),
-          ("$EventData", item.Json)
-      );
+        await insertCommand.ExecuteNonQueryAsync();
 
-      await insertCommand.ExecuteNonQueryAsync();
-
-      return index++;
+        return index++;
       }
-      catch(Exception ex)
+      catch (Exception ex)
       {
         System.Diagnostics.Debug.WriteLine(ex.Message);
         throw;

@@ -43,8 +43,8 @@ namespace ME.RecordPlayer.EventSourcing.Tests
 
     private async Task When_We_Close_The_Entity()
     {
-      await Task.Run(() => 
-      { 
+      await Task.Run(() =>
+      {
         oldState = SUT.State;
         SUT.State = null;
       });
@@ -58,7 +58,8 @@ namespace ME.RecordPlayer.EventSourcing.Tests
 
     private async Task Then_It_Should_Have_These_State_Properties()
     {
-      await Task.Run(() => { 
+      await Task.Run(() =>
+      {
         Assert.Equal(oldState.ClientId, SUT.State.ClientId);
         Assert.Equal(oldState.DisplayName, SUT.State.DisplayName);
         Assert.Equal(oldState.DocumentId, SUT.State.DocumentId);
