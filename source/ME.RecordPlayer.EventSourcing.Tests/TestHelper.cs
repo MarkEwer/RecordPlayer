@@ -17,35 +17,25 @@
 //    internal Recorder Recorder = null;
 //    internal DocumentState State = null;
 
-//    internal Uploaded Event1 => new Uploaded(this.DocumentId, "File.pdf", "Unit Test File", this.Now, this.Now, this.ClientId, this.UserId, this.Now);
+// internal Uploaded Event1 => new Uploaded(this.DocumentId, "File.pdf", "Unit Test File", this.Now,
+// this.Now, this.ClientId, this.UserId, this.Now);
 
-//    internal EmployeeAssigned Event2 => new EmployeeAssigned(this.DocumentId, this.EmployeeId, "Mark", "ME", "Ewer", "42", "Number-1", this.ClientId, this.UserId, this.Now);
+// internal EmployeeAssigned Event2 => new EmployeeAssigned(this.DocumentId, this.EmployeeId,
+// "Mark", "ME", "Ewer", "42", "Number-1", this.ClientId, this.UserId, this.Now);
 
-//    internal DisplayNameChanged Rename(int renameCounter) => new DisplayNameChanged(this.DocumentId, $"Unit Test File Renamed {renameCounter}", this.ClientId, this.UserId, this.Now);
+// internal DisplayNameChanged Rename(int renameCounter) => new DisplayNameChanged(this.DocumentId,
+// $"Unit Test File Renamed {renameCounter}", this.ClientId, this.UserId, this.Now);
 
-//    internal DocumentState GetState() => State;
+// internal DocumentState GetState() => State;
 
-//    internal void ApplyEvent(object @event)
-//    {
-//      switch (@event)
-//      {
-//        case RecordedEvent recorded:
-//          State.ApplyEvent(recorded.Data);
-//          break;
+// internal void ApplyEvent(object @event) { switch (@event) { case RecordedEvent recorded:
+// State.ApplyEvent(recorded.Data); break;
 
-//        case ReplayEvent replay:
-//          State.ApplyEvent(replay.Data);
-//          break;
+// case ReplayEvent replay: State.ApplyEvent(replay.Data); break;
 
-//        case RecoverEvent recover:
-//          State.ApplyEvent(recover.Data);
-//          break;
+// case RecoverEvent recover: State.ApplyEvent(recover.Data); break;
 
-//        default:
-//          State.ApplyEvent(@event);
-//          break;
-//      }
-//    }
+// default: State.ApplyEvent(@event); break; } }
 
 //    internal void ApplySnapshot(Snapshot snap)
 //    {
