@@ -19,3 +19,9 @@ When a kanban board is placed in an easily accessible and often accessed area th
 7. Workers can find the work tasks they need to perform next by looking in the columns assigned to them.
 8. Reviewers can find the work products they need to inspect by looking in the columns assigned to them.
 9. Details of how to complete a task, what work products are involved in the task, and the history of what has already been done for the task are all tracked inside the details of the card.
+
+## Actors
+
+- [Manager](./Actors/Manager.md) - Creates and manages project board
+- [Worker](./Actors/Worker.md) - Performs work tasks specified on cards
+- [Reviewer](./Actors/Reviewer.md) - Approves work products created during task execution
