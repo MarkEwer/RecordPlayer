@@ -25,3 +25,17 @@ In our kanban system, the manager is responsible for creating the structure of t
 3. Generate a Work Breakdown Structure from the tasks in the system.
 4. Generate a report showing all tasks in a specific state.
 5. Generate a report showing all tasks assigned to a particular worker.
+
+```Gherkin
+@manager
+Scenario: Create a new project from scratch
+  Given there are no existing projects in the system
+    And a user named Dave has logged into the system
+   When the user chooses the "Create Project" option
+    And supplies a project name of "Unit Test" 
+    And supplies a project description of "Unit Test"
+   Then a new project will be created
+    And it will have the name "Unit Test"
+    And it will have the description "Unit Test"
+    And Dave will be registered as a team member with the "Manager" role on the project
+```

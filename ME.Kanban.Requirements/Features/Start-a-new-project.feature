@@ -1,11 +1,5 @@
 Feature: Start a new project
 
-  """
-  User Story: As a Manager, I want to start a new project so that I can define how our work will be performed.
-
-  We should add a description of how and why this feature is important here. Note that you can use markdown formatting to improve readability.
-  """
-
 @manager
 Scenario: Create a new project from scratch
   Given there are no existing projects in the system
