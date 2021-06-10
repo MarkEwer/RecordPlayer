@@ -6,8 +6,33 @@ Reviewers are team members that verify the correctness and/or completeness of wo
 
 ### Approve or Reject a Work Task
 
-1. Quickly identify the work cards that are waiting for my review.
-2. View the details of a card's work requirements and the work products created during the work execution to verify if the requirements have been met and the result meets my quality expectations.
-3. Comment on a work card so the worker assigned to this card will receive the message.
-4. Reject a work card so that it returns to the awaiting queue in the current project board column.
-5. Approve a work card and specify which column it should move to next based on the workflow rules for the project board.
+#### Quickly identify the work cards that are waiting for my review
+
+```Gherkin
+Scenario: Discover cards waiting for my approval
+```
+
+#### View the details of a card's work requirements and the work products created during the work execution to verify if the requirements have been met and the result meets my quality expectations
+
+```Gherkin
+Scenario: Approve a work task waiting for my review
+```
+
+#### Comment on a work card so the worker assigned to this card will receive the message
+
+```Gherkin
+@Reviewer, @Worker
+Scenario: Comment on a card
+```
+
+#### Reject a work card so that it returns to the awaiting queue in the current project board column
+
+```Gherkin
+Scenario: Reject a work task waiting for my review
+```
+
+#### Approve a work card and specify which column it should move to next based on the workflow rules for the project board
+
+```Gherkin
+Scenario: Move a card from "review" to a new column per the workflow
+```
