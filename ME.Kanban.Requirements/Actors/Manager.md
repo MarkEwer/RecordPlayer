@@ -4,9 +4,9 @@ In our kanban system, the manager is responsible for creating the structure of t
 
 ## Use Cases
 
-### Setup and Maintain A Project Board
+### EPIC: Setup and Maintain A Project Board
 
-#### Start a new project
+#### STORY: Start a new project
 
 ```Gherkin
 Scenario: Create a new project from scratch
@@ -37,7 +37,7 @@ Scenario: Create a new project using an existing project as a template
     And Dave is the only team member in the new project    
 ```
 
-#### Invite a person to join your project
+#### STORY: Invite a person to join your project
 
 ```Gherkin
 Scenario: Invite a user to join by email address
@@ -63,7 +63,7 @@ Scenario: Invite a user of a different project to join
     And Bill is given the "Worker" role in the "Unit Test" project
 ```
 
-#### Define roles that the members of your project team will perform
+#### STORY: Define roles that the members of your project team will perform
 
 ```Gherkin
 Scenario: Define a role
@@ -73,7 +73,7 @@ Scenario: Define a role
     And
    Then
     And
-    
+
 Scenario: View the permissions of an existing role
   Given
     And
@@ -83,7 +83,7 @@ Scenario: View the permissions of an existing role
     And
 ```
 
-#### Specify the role a project team member will perform on the project
+#### STORY: Specify the role a project team member will perform on the project
 
 ```Gherkin
 Scenario: Link a project team member to a role
@@ -103,7 +103,7 @@ Scenario: Link a project team member to a built-in role
     And
 ```
 
-#### Associate a worker role to a column on the project board
+#### STORY: Associate a worker role to a column on the project board
 
 ```Gherkin
 Scenario: Specify a role as the worker for a column in the project
@@ -115,7 +115,7 @@ Scenario: Specify a role as the worker for a column in the project
     And
 ```
 
-#### Associate a reviewer role to a column on the project board
+#### STORY: Associate a reviewer role to a column on the project board
 
 ```Gherkin
 Scenario: Specify a role as the reviewer for a column in the project
@@ -127,7 +127,7 @@ Scenario: Specify a role as the reviewer for a column in the project
     And
 ```
 
-#### Add a new project board to the project
+#### STORY: Add a new project board to the project
 
 ```Gherkin
 Scenario: Split a board into two boards
@@ -147,7 +147,7 @@ Scenario: Combine two boards into one board
     And
 ```
 
-#### Add column to a project board
+#### STORY: Add column to a project board
 
 ```Gherkin
 Scenario: Add a new column to a board
@@ -167,7 +167,7 @@ Scenario: Remove an existing column from a board
     And
 ```
 
-#### Define workflow rules that say which columns a card can move to based on which column it is in right now
+#### STORY: Define workflow rules that say which columns a card can move to based on which column it is in right now
 
 ```Gherkin
 Scenario: Define a set of columns that a card can move to when it leaves a column
@@ -195,7 +195,7 @@ Scenario: Define an auto-move rule when a column has no reviewers
     And
 ```
 
-#### Define a workflow rule that says a card should move to a different board when it is approved in a particular column
+#### STORY: Define a workflow rule that says a card should move to a different board when it is approved in a particular column
 
 ```Gherkin
 Scenario: Define a rule that moves a card to a column on a different board in the project
@@ -215,9 +215,9 @@ Scenario: Define a rule that moves a card to a column on in a different project
     And
 ```
 
-### Gather and Analyze Project Performance Metrics
+### EPIC: Gather and Analyze Project Performance Metrics
 
-#### Generate a report showing the project velocity for a given time period
+#### STORY: Generate a report showing the project velocity for a given time period
 
 ```Gherkin
 Scenario: View Velocity Report
@@ -229,7 +229,7 @@ Scenario: View Velocity Report
     And
 ```
 
-#### Generate a report showing the task cycle time for a given time period
+#### STORY: Generate a report showing the task cycle time for a given time period
 
 ```Gherkin
 Scenario: View Cycle Time Report
@@ -241,7 +241,7 @@ Scenario: View Cycle Time Report
     And
 ```
 
-#### Generate a Work Breakdown Structure from the tasks in the system
+#### STORY: Generate a Work Breakdown Structure from the tasks in the system
 
 ```Gherkin
 Scenario: View Work Breakdown Structure
@@ -253,7 +253,7 @@ Scenario: View Work Breakdown Structure
     And
 ```
 
-#### Generate a report showing all tasks in a specific state
+#### STORY: Generate a report showing all tasks in a specific state
 
 ```Gherkin
 Scenario: View Task List
@@ -265,7 +265,7 @@ Scenario: View Task List
     And
 ```
 
-#### Generate a report showing all tasks assigned to a particular worker
+#### STORY: Generate a report showing all tasks assigned to a particular worker
 
 ```Gherkin
 Scenario: View Worker Activity Report

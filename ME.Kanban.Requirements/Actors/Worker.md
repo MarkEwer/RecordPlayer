@@ -4,9 +4,9 @@ Workers are the heart of a product team because they actually do the work to mov
 
 ## Use Cases
 
-### Define a Card
+### EPIC: Define a Card
 
-#### Define the kinds of cards tracked on our project board
+#### STORY: Define the kinds of cards tracked on our project board
 
 ```Gherkin
 Scenario: Define a new card type
@@ -32,7 +32,7 @@ Scenario: Organize the field presentation for a card type
     And
 ```
 
-#### Specify the requirements to complete the work indicated by this card
+#### STORY: Specify the requirements to complete the work indicated by this card
 
 ```Gherkin
 Scenario: Specify data input restrictions for a field on a card type
@@ -44,7 +44,7 @@ Scenario: Specify data input restrictions for a field on a card type
     And
 ```
 
-#### Provide a scope estimate of the work associated with this card
+#### STORY: Provide a scope estimate of the work associated with this card
 
 ```Gherkin
 Scenario: Estimate a card
@@ -56,7 +56,7 @@ Scenario: Estimate a card
     And
 ```
 
-#### Link external dependencies to this card by URL such as specifications
+#### STORY: Link external dependencies to this card by URL such as specifications
 
 ```Gherkin
 Scenario: Link a URL to a card
@@ -68,9 +68,9 @@ Scenario: Link a URL to a card
     And
 ```
 
-### Perform Work Against a Card
+### EPIC: Perform Work Against a Card
 
-#### Append to a journal of activity for this card's associated work
+#### STORY: Append to a journal of activity for this card's associated work
 
 ```Gherkin
 Scenario: Comment on a card
@@ -96,7 +96,7 @@ Scenario: Attach an image to a card
     And
 ```
 
-#### Refine the estimate-to-complete for this card to indicate work remaining
+#### STORY: Refine the estimate-to-complete for this card to indicate work remaining
 
 ```Gherkin
 Scenario: Refine the estimate-to-complete value
@@ -108,12 +108,19 @@ Scenario: Refine the estimate-to-complete value
     And
 ```
 
-#### Link work products to this card by URL
+#### STORY: Link work products to this card by URL
 
 ```Gherkin
+Scenario: Link a URL to a card
+  Given
+    And
+   When
+    And
+   Then
+    And
 ```
 
-#### Make a comment on the card that others will see when they view the card
+#### STORY: Make a comment on the card that others will see when they view the card
 
 ```Gherkin
 @Reviewer, @Worker
@@ -126,7 +133,7 @@ Scenario: Comment on a card
     And
 ```
 
-#### Indicate the the work on a card for the current column has been completed and that work is ready to be verified by the Reviewer
+#### STORY: Indicate the the work on a card for the current column has been completed and that work is ready to be verified by the Reviewer
 
 ```Gherkin
 Scenario: Move a card from "in-work" to "review" for the current column

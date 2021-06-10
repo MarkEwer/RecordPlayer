@@ -4,9 +4,9 @@ Reviewers are team members that verify the correctness and/or completeness of wo
 
 ## Use Cases
 
-### Approve or Reject a Work Task
+### EPIC: Approve or Reject a Work Task
 
-#### Quickly identify the work cards that are waiting for my review
+#### STORY: Quickly identify the work cards that are waiting for my review
 
 ```Gherkin
 Scenario: Discover cards waiting for my approval
@@ -18,7 +18,7 @@ Scenario: Discover cards waiting for my approval
     And
 ```
 
-#### View the details of a card's work requirements and the work products created during the work execution to verify if the requirements have been met and the result meets my quality expectations
+#### STORY: View the details of a card's work requirements and the work products created during the work execution to verify if the requirements have been met and the result meets my quality expectations
 
 ```Gherkin
 Scenario: Approve a work task waiting for my review
@@ -30,7 +30,7 @@ Scenario: Approve a work task waiting for my review
     And
 ```
 
-#### Comment on a work card so the worker assigned to this card will receive the message
+#### STORY: Comment on a work card so the worker assigned to this card will receive the message
 
 ```Gherkin
 @Reviewer, @Worker
@@ -43,7 +43,7 @@ Scenario: Comment on a card
     And
 ```
 
-#### Reject a work card so that it returns to the awaiting queue in the current project board column
+#### STORY: Reject a work card so that it returns to the awaiting queue in the current project board column
 
 ```Gherkin
 Scenario: Reject a work task waiting for my review
@@ -55,7 +55,7 @@ Scenario: Reject a work task waiting for my review
     And
 ```
 
-#### Approve a work card and specify which column it should move to next based on the workflow rules for the project board
+#### STORY: Approve a work card and specify which column it should move to next based on the workflow rules for the project board
 
 ```Gherkin
 Scenario: Move a card from "review" to a new column per the workflow
