@@ -12,18 +12,18 @@ namespace ME.Kanban.Domain.Worker
       {
         if(!string.IsNullOrEmpty(@event.Role))
         { 
-          this.Roles[@event.BoardId] = @event.Role;
+          this._roles[@event.BoardId] = @event.Role;
         }
         else
         {
-          _ = this.Roles.Remove(@event.BoardId);
+          _ = this._roles.Remove(@event.BoardId);
         }
       }
       else
       {
         if (!string.IsNullOrEmpty(@event.Role))
         {
-          this.Roles.Add(@event.BoardId, @event.Role);
+          this._roles.Add(@event.BoardId, @event.Role);
         }
       }
     }

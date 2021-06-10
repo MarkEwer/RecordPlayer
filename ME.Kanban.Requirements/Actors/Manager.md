@@ -6,7 +6,7 @@ In our kanban system, the manager is responsible for creating the structure of t
 
 ### Setup and Maintain A Project Board
 
-1. Start a new project.
+1. [Start a new project](../Features/Start-a-new-project.feature).
 2. Invite a person to join your project.
 3. Define roles that the members of your project team will perform.
 4. Specify the role a project team member will perform on the project.

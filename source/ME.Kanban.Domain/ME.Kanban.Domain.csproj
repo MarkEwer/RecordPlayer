@@ -4,4 +4,12 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Project\ProjectState.Start.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Project\ProjectState.Start.cs" />
+  </ItemGroup>
+
 </Project>

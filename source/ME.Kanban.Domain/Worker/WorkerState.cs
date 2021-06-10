@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace ME.Kanban.Domain.Worker
 {
   public partial class WorkerState
   {
+    private readonly SortedDictionary<string, string> _roles = new();
+
     #region Predictable State Tracking Properties
     public string Name { get; private set; }
     public string GivenName { get; private set; }
     public string Surname { get; private set; }
     public WorkerStatuses Status { get; private set; }
-    public IDictionary<string, string> Roles { get; set; } = new Dictionary<string, string>();
+    public IImmutableDictionary<string, string> Roles => _roles.ToImmutableDictionary();
 
     #endregion Predictable State Tracking Properties
 
