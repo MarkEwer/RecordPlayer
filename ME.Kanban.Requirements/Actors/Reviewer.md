@@ -10,12 +10,26 @@ Reviewers are team members that verify the correctness and/or completeness of wo
 
 ```Gherkin
 Scenario: Discover cards waiting for my approval
-  Given
-    And
-   When
-    And
-   Then
-    And
+  Given a project called "Unit Test" exists
+    And "Unit Test" has only one board called "Board 1"
+    And "Board 1" has the default columns called "New" and "Done"
+    And "Board 1" has a third columns called "In Work"
+    And a user called "Janet" is a reviewer in the "Unit Test" project
+    And "Janet" is the reviewer for the "In Work" column
+    And the "In Work" column contains nine cards
+    And there are three cards that have not been assigned a worker
+    And there are three incomplete cards
+    And there are three complete cards that have not been assigned a reviewer        
+   When "Janet" opens the "Board 1" project board
+   Then "Janet" will see the following in the "In Work" column
+   
+        | To Do  | Doing  | To Review |
+        |--------|--------|-----------|
+        | Card 1 | Card 4 | *Card 7*  |
+        | Card 2 | Card 5 | *Card 8*  |
+        | Card 3 | Card 6 | *Card 9*  |
+
+    And cards 7, 8 and 9 will be highlighted to indicate Janet can act on them
 ```
 
 #### STORY: View the details of a card's work requirements and the work products created during the work execution to verify if the requirements have been met and the result meets my quality expectations

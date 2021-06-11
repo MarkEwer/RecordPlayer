@@ -16,6 +16,7 @@ Scenario: Define a new card type
     And
    Then
     And
+    
 Scenario: Edit the definition of an existing card type
   Given
     And
@@ -23,6 +24,7 @@ Scenario: Edit the definition of an existing card type
     And
    Then
     And
+
 Scenario: Organize the field presentation for a card type
   Given
     And
@@ -80,6 +82,7 @@ Scenario: Comment on a card
     And
    Then
     And
+
 Scenario: Enter a message to journal the work performed on a card
   Given
     And
@@ -87,6 +90,7 @@ Scenario: Enter a message to journal the work performed on a card
     And
    Then
     And
+
 Scenario: Attach an image to a card
   Given
     And
