@@ -148,4 +148,3 @@ Scenario: Move a card from "in-work" to "review" for the current column
    Then
     And
 ```
-

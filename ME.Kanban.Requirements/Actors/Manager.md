@@ -67,15 +67,17 @@ Scenario: Invite a user of a different project to join
 
 ```Gherkin
 Scenario: Define a role
-  Given
-    And
-   When
-    And
-   Then
-    And
+  Given a project called "Unit Test" exists
+    And no custom roles have been added to the "Unit Test" project
+    And a user named Dave is the project manager
+   When Dave opens the project roles
+    And selects the "Add Role" option
+    And enters the role name "Artist"
+   Then the roles screen will show a role called "Manager" that is not editable
+    And the roles screen will show a role called "Artist" that is editable
 
 Scenario: View the permissions of an existing role
-  Given
+  Given 
     And
    When
     And
