@@ -2,11 +2,11 @@
 
 namespace ME.Kanban.Domain.Worker
 {
+
     public partial class WorkerState
     {
-        public record CancelWorkerAccount();
 
-        public void Apply(CancelWorkerAccount @event)
+        public void Apply(AccountCanceled @event)
         {
             this.Status = WorkerStatuses.Canceled;
         }

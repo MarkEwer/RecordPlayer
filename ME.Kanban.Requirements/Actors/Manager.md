@@ -77,12 +77,25 @@ Scenario: Define a role
     And the roles screen will show a role called "Artist" that is editable
 
 Scenario: View the permissions of an existing role
-  Given 
-    And
-   When
-    And
-   Then
-    And
+  Given a project called "Unit Test" exists
+    And a user named Dave is the project manager
+    and the project has one board called "Board 1"
+    And and the column "In Work" exists
+    And and the column "Testing" exists
+    And the role "Developer" exists
+    And the role "QA" exists
+    And the role "Developer" is assigned "Worker" for the "In Work" column
+    And the role "QA" is assigned "Reviewer" for the "In Work" column
+    And the role "QA" is assigned "Worker" for the "Testing" column
+   When Dave opens the project
+    And Dave selects teh "View Permissions"
+   Then the system displays a permissions report that looks like this
+
+        | Board   | Column  | Role      | Permission |
+        |---------|---------|-----------|------------|
+        | Board 1 | In Work | Developer | Worker     |
+        | Board 1 | In Work | QA        | Reviewer   |
+        | Board 1 | Testing | QA        | Worker     |
 ```
 
 #### STORY: Specify the role a project team member will perform on the project

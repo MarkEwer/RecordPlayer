@@ -4,9 +4,8 @@ namespace ME.Kanban.Domain.Worker
 {
     public partial class WorkerState
     {
-        public record Rename(string GivenName, string Surname);
 
-        public void Apply(Rename @event)
+        public void Apply(Renamed @event)
         {
             this.GivenName = @event.GivenName;
             this.Surname = @event.Surname;

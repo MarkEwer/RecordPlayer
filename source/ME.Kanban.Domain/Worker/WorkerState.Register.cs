@@ -2,11 +2,11 @@
 
 namespace ME.Kanban.Domain.Worker
 {
+
     public partial class WorkerState
     {
-        public record Register(string Name);
 
-        public void Apply(Register @event)
+        public void Apply(Registered @event)
         {
             this.Name = @event.Name;
             this.Status = WorkerStatuses.Active;

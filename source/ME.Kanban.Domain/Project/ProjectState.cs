@@ -2,32 +2,44 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ME.Kanban.Domain.Project
 {
-  public partial class ProjectState
-  {
-    private readonly SortedDictionary<string, string> _members = new();
-
-    #region Predictable State Tracking Properties
-    public string Name { get; private set; }
-    public string Description { get; private set; }
-    public ProjectStatuses Status { get; private set; }
-    public IImmutableDictionary<string, string> Members => _members.ToImmutableDictionary();
-
-    #endregion Predictable State Tracking Properties
-
-    #region Project Enumerations
-    public enum ProjectStatuses : short
+    public partial class ProjectState
     {
-      Unknown = 0,
-      Active = 1,
-      Supsended = 2,
-      Closed = 3,
-      Complete = 4
+        private readonly SortedSet<string> _boards = new();
+        private readonly SortedDictionary<string, string> _members = new();
+
+        #region Predictable State Tracking Properties
+
+        public IImmutableList<string> Boards => _boards.ToImmutableList();
+        public string Description { get; private set; }
+        public IImmutableDictionary<string, string> Members => _members.ToImmutableDictionary();
+        public string Name { get; private set; }
+        public ProjectStatuses Status { get; private set; }
+
+        #endregion Predictable State Tracking Properties
+
+        #region Project Event Apply Methods
+
+        public void Apply(StartProject @event)
+        {
+            this.Name = @event.Name;
+            this.Description = @event.Description;
+        }
+
+        public void Apply(TeamMemberAdded @event)
+        {
+            if (this._members.ContainsKey(@event.Name))
+            {
+                this._members[@event.Name] = @event.Role;
+            }
+            else
+            {
+                this._members.Add(@event.Name, @event.Role);
+            }
+        }
+
+        #endregion Project Event Apply Methods
     }
-    #endregion Project Enumerations
-  }
 }
