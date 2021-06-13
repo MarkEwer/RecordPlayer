@@ -2,6 +2,8 @@
 
 namespace ME.Kanban.Domain.Worker
 {
+    public record BoardAccessGranted(string BoardId, string Role);
+
     public partial class WorkerState
     {
 

@@ -3,6 +3,8 @@
 namespace ME.Kanban.Domain.Worker
 {
 
+    public record Registered(string Name);
+
     public partial class WorkerState
     {
 

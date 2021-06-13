@@ -2,6 +2,8 @@
 
 namespace ME.Kanban.Domain.Worker
 {
+    public record Renamed(string GivenName, string Surname);
+
     public partial class WorkerState
     {
 

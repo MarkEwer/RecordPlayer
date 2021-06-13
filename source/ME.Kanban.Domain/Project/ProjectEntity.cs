@@ -21,19 +21,5 @@ namespace ME.Kanban.Domain.Project
         public string ActorId { get; private set; }
         public Recorder Recorder { get; private set; }
 
-        #region Project Command Handlers
-
-        protected void Handle(ProjectCommands command)
-        {
-            if (string.IsNullOrEmpty(command.Name)) throw new ArgumentNullException(nameof(ProjectCommands.Name), "A project name is required.");
-            if (string.IsNullOrEmpty(command.Description)) throw new ArgumentNullException(nameof(ProjectCommands.Description), "A project description is required.");
-            if (this.State != null) throw new ProjectAlreadyExistsException("Projects can only be created once.");
-
-            var @event = new StartProject(command.Name, command.Description);
-
-        }
-
-        #endregion Project Command Handlers
-
     }
 }

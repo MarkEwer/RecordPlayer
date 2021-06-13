@@ -22,24 +22,6 @@ namespace ME.Kanban.Domain.Project
 
         #region Project Event Apply Methods
 
-        public void Apply(StartProject @event)
-        {
-            this.Name = @event.Name;
-            this.Description = @event.Description;
-        }
-
-        public void Apply(TeamMemberAdded @event)
-        {
-            if (this._members.ContainsKey(@event.Name))
-            {
-                this._members[@event.Name] = @event.Role;
-            }
-            else
-            {
-                this._members.Add(@event.Name, @event.Role);
-            }
-        }
-
         #endregion Project Event Apply Methods
     }
 }
