@@ -2,30 +2,30 @@
 
 namespace ME.Kanban.Domain.Worker
 {
-  public partial class WorkerState
-  {
-    public record GrantBoardAccess(string BoardId, string Role);
+    public partial class WorkerState
+    {
+        public record GrantBoardAccess(string BoardId, string Role);
 
-    public void Apply(GrantBoardAccess @event) 
-    { 
-      if(this.Roles.ContainsKey(@event.BoardId))
-      {
-        if(!string.IsNullOrEmpty(@event.Role))
-        { 
-          this._roles[@event.BoardId] = @event.Role;
-        }
-        else
+        public void Apply(GrantBoardAccess @event)
         {
-          _ = this._roles.Remove(@event.BoardId);
+            if (this.Roles.ContainsKey(@event.BoardId))
+            {
+                if (!string.IsNullOrEmpty(@event.Role))
+                {
+                    this._roles[@event.BoardId] = @event.Role;
+                }
+                else
+                {
+                    _ = this._roles.Remove(@event.BoardId);
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(@event.Role))
+                {
+                    this._roles.Add(@event.BoardId, @event.Role);
+                }
+            }
         }
-      }
-      else
-      {
-        if (!string.IsNullOrEmpty(@event.Role))
-        {
-          this._roles.Add(@event.BoardId, @event.Role);
-        }
-      }
     }
-  }
 }

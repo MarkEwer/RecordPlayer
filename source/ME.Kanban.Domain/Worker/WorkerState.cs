@@ -3,26 +3,29 @@ using System.Collections.Immutable;
 
 namespace ME.Kanban.Domain.Worker
 {
-  public partial class WorkerState
-  {
-    private readonly SortedDictionary<string, string> _roles = new();
-
-    #region Predictable State Tracking Properties
-    public string Name { get; private set; }
-    public string GivenName { get; private set; }
-    public string Surname { get; private set; }
-    public WorkerStatuses Status { get; private set; }
-    public IImmutableDictionary<string, string> Roles => _roles.ToImmutableDictionary();
-
-    #endregion Predictable State Tracking Properties
-
-    #region Worker Enumerations
-    public enum WorkerStatuses : short
+    public partial class WorkerState
     {
-      Unknown = 0,
-      Active = 1,
-      Canceled = 2
+        private readonly SortedDictionary<string, string> _roles = new();
+
+        #region Predictable State Tracking Properties
+
+        public string GivenName { get; private set; }
+        public string Name { get; private set; }
+        public IImmutableDictionary<string, string> Roles => _roles.ToImmutableDictionary();
+        public WorkerStatuses Status { get; private set; }
+        public string Surname { get; private set; }
+
+        #endregion Predictable State Tracking Properties
+
+        #region Worker Enumerations
+
+        public enum WorkerStatuses : short
+        {
+            Unknown = 0,
+            Active = 1,
+            Canceled = 2
+        }
+
+        #endregion Worker Enumerations
     }
-    #endregion Worker Enumerations
-  }
 }
