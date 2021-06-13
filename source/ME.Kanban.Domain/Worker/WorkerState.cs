@@ -16,6 +16,5 @@ namespace ME.Kanban.Domain.Worker
         public string Surname { get; private set; }
 
         #endregion Predictable State Tracking Properties
-
     }
 }

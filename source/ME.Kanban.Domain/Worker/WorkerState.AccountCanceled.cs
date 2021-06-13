@@ -2,7 +2,6 @@
 
 namespace ME.Kanban.Domain.Worker
 {
-
     public record AccountCanceled();
 
     public partial class WorkerState

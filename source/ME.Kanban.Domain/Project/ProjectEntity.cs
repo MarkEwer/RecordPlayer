@@ -20,6 +20,5 @@ namespace ME.Kanban.Domain.Project
 
         public string ActorId { get; private set; }
         public Recorder Recorder { get; private set; }
-
     }
 }

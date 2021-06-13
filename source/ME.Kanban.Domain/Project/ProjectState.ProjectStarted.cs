@@ -10,5 +10,4 @@
             this.Description = @event.Description;
         }
     }
-
 }

@@ -19,9 +19,5 @@ namespace ME.Kanban.Domain.Project
         public ProjectStatuses Status { get; private set; }
 
         #endregion Predictable State Tracking Properties
-
-        #region Project Event Apply Methods
-
-        #endregion Project Event Apply Methods
     }
 }

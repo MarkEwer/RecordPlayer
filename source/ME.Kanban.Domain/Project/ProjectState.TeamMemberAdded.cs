@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace ME.Kanban.Domain.Project
 {
-
     public record TeamMemberAdded(string Name, string Role);
 
     public partial class ProjectState
@@ -20,7 +19,5 @@ namespace ME.Kanban.Domain.Project
                 this._members.Add(@event.Name, @event.Role);
             }
         }
-
     }
-
 }
