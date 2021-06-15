@@ -1,4 +1,5 @@
 ﻿using System;
+using ME.Kanban.Domain.Project.Exceptions;
 
 namespace ME.Kanban.Domain.Project
 {

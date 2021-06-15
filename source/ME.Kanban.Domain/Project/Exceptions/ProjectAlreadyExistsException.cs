@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace ME.Kanban.Domain.Project
+namespace ME.Kanban.Domain.Project.Exceptions
 {
     public class ProjectAlreadyExistsException : Exception
     {
