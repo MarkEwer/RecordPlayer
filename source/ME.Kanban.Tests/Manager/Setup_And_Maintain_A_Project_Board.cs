@@ -1,9 +1,9 @@
 using System;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace ME.Kanban.Tests.Manager
 {
-    using System.Threading.Tasks;
-    using Xunit;
 
     public class Setup_And_Maintain_A_Project_Board
     {
