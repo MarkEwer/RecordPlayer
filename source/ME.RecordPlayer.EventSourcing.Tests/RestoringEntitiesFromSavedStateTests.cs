@@ -44,7 +44,7 @@ namespace ME.RecordPlayer.EventSourcing.Tests
 
     private async Task Then_It_Should_Have_These_State_Properties()
     {
-      await Task.Run(() =>
+      var T = Task.Run(() =>
       {
         Assert.Equal(oldState.ClientId, SUT.State.ClientId);
         Assert.Equal(oldState.DisplayName, SUT.State.DisplayName);
@@ -53,6 +53,7 @@ namespace ME.RecordPlayer.EventSourcing.Tests
         Assert.Equal(oldState.Received, SUT.State.Received);
         Assert.Equal(oldState.Uploaded, SUT.State.Uploaded);
       });
+      await T.WaitAsync(TimeSpan.FromSeconds(3));
     }
 
     private async Task When_We_Attempt_To_Recover_The_Saved_Entity()
@@ -63,11 +64,13 @@ namespace ME.RecordPlayer.EventSourcing.Tests
 
     private async Task When_We_Close_The_Entity()
     {
-      await Task.Run(() =>
+      var T = Task.Run(() =>
       {
         oldState = SUT.State;
         SUT.State = null;
       });
+
+      await T.WaitAsync(TimeSpan.FromSeconds(3));
     }
   }
 }

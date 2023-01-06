@@ -28,23 +28,27 @@ namespace ME.RecordPlayer.EventSourcing.Tests
 
     private async Task A_New_DocumentState_Entity_Exists()
     {
-      await Task.Run(() =>
+      var T = Task.Run(() =>
       {
         SUT = new DocumentEntity();
         SUT.ActorId = Guid.NewGuid().ToString();
         SUT.State = new DocumentState();
       });
+
+      await T.WaitAsync(TimeSpan.FromSeconds(3));
     }
 
     private async Task Our_Entity_Is_Configured_For_EventSourcing_And_Snapshotting()
     {
-      await Task.Run(() =>
+      var T = Task.Run(() =>
       {
         if (File.Exists("unit_test.db"))
           File.Delete("unit_test.db");
         SUT.Provider = new SqliteProvider(new SqliteConnectionStringBuilder("Data Source=unit_test.db"));
         SUT.Recorder = Recorder.WithEventSourcingAndSnapshotting(SUT.Provider, SUT.Provider, SUT.ActorId, SUT.ApplyEvent, SUT.ApplySnapshot, new IntervalStrategy(5), SUT.GetState);
       });
+
+      await T.WaitAsync(TimeSpan.FromSeconds(3));
     }
 
     private async Task We_Record_Two_Events_Now()
