@@ -1,6 +1,6 @@
 ﻿namespace ME.RecordPlayer.EventSourcing
 {
-    public interface IProvider : IEventStore, ISnapshotStore
-    {
-    }
+  public interface IProvider : IEventStore, ISnapshotStore
+  {
+  }
 }

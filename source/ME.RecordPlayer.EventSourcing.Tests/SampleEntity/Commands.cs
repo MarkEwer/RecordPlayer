@@ -2,14 +2,14 @@
 
 namespace ME.RecordPlayer.EventSourcing.Tests.SampleEntity
 {
-    public record Upload(
-        Guid DocumentId, string Filename, string DisplayName);
+  public record Upload(
+      Guid DocumentId, string Filename, string DisplayName);
 
-    public record AssignEmployee(
-        Guid DocumentId, Guid EmployeeId,
-        string GivenName, string PreferredName, string Surname,
-        string CompanyId, string AssignmentId);
+  public record AssignEmployee(
+      Guid DocumentId, Guid EmployeeId,
+      string GivenName, string PreferredName, string Surname,
+      string CompanyId, string AssignmentId);
 
-    public record RenameFile(
-        Guid DocumentId, string DisplayName);
+  public record RenameFile(
+      Guid DocumentId, string DisplayName);
 }

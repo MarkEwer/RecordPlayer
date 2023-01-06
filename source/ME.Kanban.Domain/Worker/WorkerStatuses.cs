@@ -1,9 +1,9 @@
 ﻿namespace ME.Kanban.Domain.Worker
 {
-    public enum WorkerStatuses : short
-    {
-        Unknown = 0,
-        Active = 1,
-        Canceled = 2
-    }
+  public enum WorkerStatuses : short
+  {
+    Unknown = 0,
+    Active = 1,
+    Canceled = 2
+  }
 }

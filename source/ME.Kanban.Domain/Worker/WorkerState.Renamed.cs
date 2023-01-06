@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-
-namespace ME.Kanban.Domain.Worker
+﻿namespace ME.Kanban.Domain.Worker
 {
-    public record Renamed(string GivenName, string Surname);
+  public record Renamed(string GivenName, string Surname);
 
-    public partial class WorkerState
+  public partial class WorkerState
+  {
+    public void Apply(Renamed @event)
     {
-
-        public void Apply(Renamed @event)
-        {
-            this.GivenName = @event.GivenName;
-            this.Surname = @event.Surname;
-        }
+      this.GivenName = @event.GivenName;
+      this.Surname = @event.Surname;
     }
+  }
 }

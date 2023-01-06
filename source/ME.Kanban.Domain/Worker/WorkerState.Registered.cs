@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-
-namespace ME.Kanban.Domain.Worker
+﻿namespace ME.Kanban.Domain.Worker
 {
-    public record Registered(string Name);
+  public record Registered(string Name);
 
-    public partial class WorkerState
+  public partial class WorkerState
+  {
+    public void Apply(Registered @event)
     {
-
-        public void Apply(Registered @event)
-        {
-            this.Name = @event.Name;
-            this.Status = WorkerStatuses.Active;
-        }
+      this.Name = @event.Name;
+      this.Status = WorkerStatuses.Active;
     }
+  }
 }

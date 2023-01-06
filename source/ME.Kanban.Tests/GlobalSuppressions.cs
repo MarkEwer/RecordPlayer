@@ -6,8 +6,8 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage(
-  "Blocker Code Smell", 
-  "S2699:Tests should include assertions", 
-  Justification = "Tests", 
-  Scope="NamespaceAndDescendants", 
+  "Blocker Code Smell",
+  "S2699:Tests should include assertions",
+  Justification = "Tests",
+  Scope = "NamespaceAndDescendants",
   Target = "~N:ME.Kanban.Tests")]
