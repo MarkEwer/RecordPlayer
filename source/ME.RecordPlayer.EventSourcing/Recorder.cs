@@ -41,7 +41,18 @@ namespace ME.RecordPlayer.EventSourcing
 
     private bool UsingSnapshotting => _applySnapshot is not null;
 
-    public static Recorder WithEventSourcing(IEventStore eventStore, string actorId, Action<Event> applyEvent)
+    /// <summary>
+    ///   Create an instance of the Recorder that supports events but does not support snapshots.
+    /// </summary>
+    /// <param name="eventStore"></param>
+    /// <param name="actorId"></param>
+    /// <param name="applyEvent"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static Recorder WithEventSourcing(
+        IEventStore eventStore, 
+        string actorId, 
+        Action<Event> applyEvent)
     {
       if (eventStore is null)
         throw new ArgumentNullException(nameof(eventStore));
@@ -52,6 +63,16 @@ namespace ME.RecordPlayer.EventSourcing
       return new Recorder(eventStore, new MockSnapshotStore(), actorId, applyEvent);
     }
 
+    /// <summary>
+    ///   Create an instance of the Recorder that supports both events and snapshots but the Entity will manually choose when snapshots should occur.
+    /// </summary>
+    /// <param name="eventStore"></param>
+    /// <param name="snapshotStore"></param>
+    /// <param name="actorId"></param>
+    /// <param name="applyEvent"></param>
+    /// <param name="applySnapshot"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static Recorder WithEventSourcingAndSnapshotting(
         IEventStore eventStore,
         ISnapshotStore snapshotStore,
@@ -75,6 +96,18 @@ namespace ME.RecordPlayer.EventSourcing
       return new Recorder(eventStore, snapshotStore, actorId, applyEvent, applySnapshot);
     }
 
+    /// <summary>
+    ///   Create an instance of the Recorder that supports both events and snapshots and has an automatic snapshotting strategy.
+    /// </summary>
+    /// <param name="eventStore"></param>
+    /// <param name="snapshotStore"></param>
+    /// <param name="actorId"></param>
+    /// <param name="applyEvent"></param>
+    /// <param name="applySnapshot"></param>
+    /// <param name="snapshotStrategy"></param>
+    /// <param name="getState"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static Recorder WithEventSourcingAndSnapshotting(
         IEventStore eventStore,
         ISnapshotStore snapshotStore,
@@ -108,6 +141,14 @@ namespace ME.RecordPlayer.EventSourcing
       );
     }
 
+    /// <summary>
+    ///   Create an instance of the Recorder that supports snapshots but does not support events.
+    /// </summary>
+    /// <param name="snapshotStore"></param>
+    /// <param name="actorId"></param>
+    /// <param name="applySnapshot"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static Recorder WithSnapshotting(
         ISnapshotStore snapshotStore,
         string actorId,
@@ -123,12 +164,28 @@ namespace ME.RecordPlayer.EventSourcing
       return new Recorder(new MockEventStore(), snapshotStore, actorId, null, applySnapshot);
     }
 
+    /// <summary>
+    ///   Remove a set of events from the event store to reset an entity to a previous state.
+    /// </summary>
+    /// <param name="inclusiveToIndex"></param>
+    /// <returns></returns>
     public Task DeleteEventsAsync(long inclusiveToIndex) =>
                 _eventStore.DeleteEventsAsync(_actorId, inclusiveToIndex);
 
+    /// <summary>
+    ///   Remove an older snapshot from the snapshot store.
+    /// </summary>
+    /// <param name="inclusiveToIndex"></param>
+    /// <returns></returns>
     public Task DeleteSnapshotsAsync(long inclusiveToIndex) =>
                 _snapshotStore.DeleteSnapshotsAsync(_actorId, inclusiveToIndex);
 
+    /// <summary>
+    ///   Records an event into the event store for the given Entity.
+    /// </summary>
+    /// <param name="event"></param>
+    /// <returns></returns>
+    /// <exception cref="EventSourcingNotConfiguredException"></exception>
     public async Task RecordEventAsync(object @event)
     {
       if (!UsingEventSourcing)
@@ -150,6 +207,11 @@ namespace ME.RecordPlayer.EventSourcing
       }
     }
 
+    /// <summary>
+    ///   Record a new snapshot into the snapshot store.
+    /// </summary>
+    /// <param name="snapshot"></param>
+    /// <returns></returns>
     public Task RecordSnapshotAsync(object snapshot)
     {
       if (!UsingSnapshotting)
@@ -164,7 +226,7 @@ namespace ME.RecordPlayer.EventSourcing
     ///   Recovers the actor to the latest state by recoving the newest snapshot then
     ///   replaying all events after that snapshot.
     /// </summary>
-    /// <returns> </returns>
+    /// <returns></returns>
     public async Task RecoverStateAsync()
     {
       var (snapshot, lastSnapshotIndex) = await _snapshotStore.GetSnapshotAsync(_actorId);
@@ -216,6 +278,8 @@ namespace ME.RecordPlayer.EventSourcing
       );
     }
 
+    #region Mock Objects that are used when events or snapshots are turned off
+
     private class MockEventStore : IEventStore
     {
       public Task DeleteEventsAsync(string actorName, long inclusiveToIndex) => Task.FromResult(0);
@@ -239,5 +303,7 @@ namespace ME.RecordPlayer.EventSourcing
 
       public Task RecordSnapshotAsync(string actorName, long index, object snapshot) => Task.FromResult(0);
     }
+
+    #endregion Mock Objects that are used when events or snapshots are turned off
   }
 }

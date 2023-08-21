@@ -1,0 +1,34 @@
+@startuml Entity-Object-Design
+
+title Entity Design and Class Composition
+
+interface ICommand
+ICommand : string? EntityId
+ICommand : Execute()
+
+interface IEvent
+IEvent : string EntityId
+IEvent : long Version
+
+interface IHandler<IEvent>
+IHandler : Apply(IEvent event)
+
+class DomainEntity
+DomainEntity : DomainState State
+
+class DomainState
+DomainState : long Version
+DomainState : Apply(IEvent event)
+DomainState -u-|> IHandler
+
+class DomainCommand
+DomainCommand -u-|> ICommand
+
+class DomainEvent
+DomainEvent : string EntityId
+DomainEvent : long Version
+DomainEvent -u-|> IEvent
+
+class DomainException
+
+@enduml

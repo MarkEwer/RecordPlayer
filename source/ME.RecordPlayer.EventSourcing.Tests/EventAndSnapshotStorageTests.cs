@@ -21,7 +21,7 @@ namespace ME.RecordPlayer.EventSourcing.Tests
             .And(async () => await Our_Entity_Is_Configured_For_EventSourcing_And_Snapshotting())
 
            .When(async () => await We_Record_Two_Events_Now())
-            .And(async () => await We_Renam_The_Document_15_Times())
+            .And(async () => await We_Rename_The_Document_15_Times())
 
            .Then(() => Assert.Equal(SUT.ClientId, SUT.State.ClientId));
     }
@@ -42,8 +42,7 @@ namespace ME.RecordPlayer.EventSourcing.Tests
     {
       var T = Task.Run(() =>
       {
-        if (File.Exists("unit_test.db"))
-          File.Delete("unit_test.db");
+        if (File.Exists("unit_test.db")) File.Delete("unit_test.db");
         SUT.Provider = new SqliteProvider(new SqliteConnectionStringBuilder("Data Source=unit_test.db"));
         SUT.Recorder = Recorder.WithEventSourcingAndSnapshotting(SUT.Provider, SUT.Provider, SUT.ActorId, SUT.ApplyEvent, SUT.ApplySnapshot, new IntervalStrategy(5), SUT.GetState);
       });
@@ -57,7 +56,7 @@ namespace ME.RecordPlayer.EventSourcing.Tests
       await SUT.Recorder.RecordEventAsync(SUT.Event2);
     }
 
-    private async Task We_Renam_The_Document_15_Times()
+    private async Task We_Rename_The_Document_15_Times()
     {
       for (int i = 1; i < 16; i++)
         await SUT.Recorder.RecordEventAsync(SUT.Rename(i));

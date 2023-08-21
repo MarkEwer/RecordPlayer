@@ -24,6 +24,7 @@ namespace ME.RecordPlayer.EventSourcing.Tests.SampleEntity
       switch (@event)
       {
         case RecordedEvent recorded:
+          // Indicates a new event that was just recorded into storage
           State.ApplyEvent(recorded.Data);
           break;
 
@@ -32,6 +33,7 @@ namespace ME.RecordPlayer.EventSourcing.Tests.SampleEntity
           break;
 
         case RecoverEvent recover:
+          // Indicates the replay of a previously stored event during re-hydration
           State.ApplyEvent(recover.Data);
           break;
 

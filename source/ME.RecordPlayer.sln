@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31112.23
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventSourcing", "EventSourcing", "{82EEFB23-30C7-4D48-B619-123D12C8AF39}"
 EndProject
@@ -24,7 +24,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kanban", "Kanban", "{FA0FBD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ME.Kanban.Tests", "ME.Kanban.Tests\ME.Kanban.Tests.csproj", "{E5A5E89E-7712-4348-BE10-81F2F5DEFB8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ME.RecordPlayer.EventSourcing.LiteDb", "ME.RecordPlayer.EventSourcing.LiteDb\ME.RecordPlayer.EventSourcing.LiteDb.csproj", "{D0CFB3AF-7734-4B66-BCBB-447394EBCC73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ME.RecordPlayer.EventSourcing.LiteDb", "ME.RecordPlayer.EventSourcing.LiteDb\ME.RecordPlayer.EventSourcing.LiteDb.csproj", "{D0CFB3AF-7734-4B66-BCBB-447394EBCC73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Surveys Domain", "Surveys Domain", "{F25274F1-5EB0-47AD-BB14-339266DF8E6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paylocity.Surveys.Domain", "Paylocity.Surveys.Domain\Paylocity.Surveys.Domain.csproj", "{DE3BDAA6-D689-48DD-9B63-11038E37A65C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +64,10 @@ Global
 		{D0CFB3AF-7734-4B66-BCBB-447394EBCC73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0CFB3AF-7734-4B66-BCBB-447394EBCC73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0CFB3AF-7734-4B66-BCBB-447394EBCC73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE3BDAA6-D689-48DD-9B63-11038E37A65C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE3BDAA6-D689-48DD-9B63-11038E37A65C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE3BDAA6-D689-48DD-9B63-11038E37A65C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE3BDAA6-D689-48DD-9B63-11038E37A65C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +80,7 @@ Global
 		{7C8442A0-F4A3-4365-93C8-5FA9A334EDC3} = {FA0FBDCD-86A0-46FB-8571-F819330763CF}
 		{E5A5E89E-7712-4348-BE10-81F2F5DEFB8C} = {FA0FBDCD-86A0-46FB-8571-F819330763CF}
 		{D0CFB3AF-7734-4B66-BCBB-447394EBCC73} = {82EEFB23-30C7-4D48-B619-123D12C8AF39}
+		{DE3BDAA6-D689-48DD-9B63-11038E37A65C} = {F25274F1-5EB0-47AD-BB14-339266DF8E6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C65439E-4D9E-436F-9CF8-584491C9DA1A}

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ME.RecordPlayer.EventSourcing\ME.RecordPlayer.EventSourcing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Response\Exceptions\" />
+    <Folder Include="Response\Commands\" />
+    <Folder Include="Response\Events\" />
+  </ItemGroup>
+
+</Project>
